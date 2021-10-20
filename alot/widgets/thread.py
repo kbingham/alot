@@ -381,7 +381,7 @@ class ThreadTree(Tree):
     """
     :class:`Tree` that parses a given :class:`alot.db.Thread` into a tree of
     :class:`MessageTrees <MessageTree>` that display this threads individual
-    messages. As MessageTreess are *not* urwid widgets themself this is to be
+    messages. As MessageTrees are *not* urwid widgets themself this is to be
     used in combination with :class:`NestedTree` only.
     """
     def __init__(self, thread):
