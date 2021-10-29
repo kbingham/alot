@@ -500,6 +500,10 @@ def get_body_part(mail, mimetype=None):
 def extract_body_part(body_part):
     """Returns a string view of a Message."""
     displaystring = ""
+
+    if isinstance(body_part, str):
+        return body_part
+
     rendered_payload = render_part(
         body_part,
         **{'field_key': 'view'} if body_part.get_content_type() == 'text/plain'
