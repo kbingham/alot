@@ -362,6 +362,8 @@ class ForwardCommand(Command):
         # Set forwarding reference headers
         envelope.add('References', '<%s>' % self.message.get_message_id())
         envelope.add('X-Forwarded-Message-Id', '<%s>' % self.message.get_message_id())
+        # Expect the forwarded conversation to continue as part of the existing thread
+        envelope.add('In-Reply-To', '<%s>' % self.message.get_message_id())
 
         # set From-header and sending account
         try:
