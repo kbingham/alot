@@ -679,6 +679,7 @@ class UI:
             info['buffer_no'] = self.buffers.index(cb)
             info['buffer_type'] = btype
         info['total_messages'] = self.dbman.count_messages('*')
+        info['total_threads'] = self.dbman.count_threads('*')
         info['pending_writes'] = len(self.dbman.writequeue)
         info['input_queue'] = ' '.join(self.input_queue)
 
