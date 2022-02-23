@@ -25,6 +25,7 @@ class SearchBuffer(Buffer):
         default_order = settings.get('search_threads_sort_order')
         self.sort_order = sort_order or default_order
         self.result_count = 0
+        self.result_threads = 0
         self.search_threads_rebuild_limit = \
             settings.get('search_threads_rebuild_limit')
         self.search_threads_move_last_limit = \
@@ -35,14 +36,17 @@ class SearchBuffer(Buffer):
         Buffer.__init__(self, ui, self.body)
 
     def __str__(self):
-        formatstring = '[search] for "%s" (%d message%s)'
+        formatstring = '[search] for "%s" (%d message%s, %d thread%s)'
         return formatstring % (self.querystring, self.result_count,
-                               's' if self.result_count > 1 else '')
+                               's' if self.result_count > 1 else '',
+                               self.result_threads,
+                               's' if self.result_threads > 1 else '')
 
     def get_info(self):
         info = {}
         info['querystring'] = self.querystring
         info['result_count'] = self.result_count
+        info['result_threads'] = self.result_threads
         info['result_count_positive'] = 's' if self.result_count > 1 else ''
         return info
 
@@ -61,6 +65,8 @@ class SearchBuffer(Buffer):
 
         try:
             self.result_count = self.dbman.count_messages(self.querystring)
+            # Can this be done easily by counting the size of threads just below?
+            self.result_threads = self.dbman.count_threads(self.querystring)
             threads = self.dbman.get_threads(self.querystring, order)
         except NotmuchError:
             self.ui.notify('malformed query string: %s' % self.querystring,
