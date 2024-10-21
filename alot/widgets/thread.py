@@ -91,7 +91,8 @@ class MessageSummaryWidget(urwid.WidgetWrap):
             psubject = parent.get_subject()
             logging.debug("Parent subject: %s" % psubject)
             logging.debug("Subject: %s" % subject)
-            subject = subject.replace(psubject, "...")
+            if psubject:
+                subject = subject.replace(psubject, "...")
             logging.debug("Stripped Subject: %s" % subject)
 
         rep += ": " + subject
